@@ -4,14 +4,29 @@ import Navbar from '../../Components/Navbar/Navbar';
 import loginIllus from "../../assets/loginIllus.png"
 import { ThemeContext } from '../../Context/ThemeContext';
 import 'remixicon/fonts/remixicon.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 
 const Login = () => {
   const { theme } = useContext(ThemeContext)
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { LoginData, HandleOnChangeLogin, HandleLoginForm } = useContext(LoginSignupContext)
+  const { LoginData, HandleOnChangeLogin, HandleLoginForm, signupData } = useContext(LoginSignupContext)
+  const handleSubmit = (e) => {
+    HandleLoginForm(e);
+    if (signupData.role === "Teacher") {
+      setTimeout(() => {
+        navigate("/teacher-portal");
+      }, 1000);
+    } else if (signupData.role === "Student") {
+      setTimeout(() => {
+        navigate("/courses");
+      }, 1000);
+    }
+
+  };
   return (
     <>
       <Navbar />
@@ -23,7 +38,7 @@ const Login = () => {
           <h1 className="text-center text-3xl outfit font-medium p-2">Welcome Back!</h1>
           <p className='raleway font-medium text-center '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, eligendi.</p>
 
-          <form onSubmit={HandleLoginForm} className='flex flex-col gap-6 mt-6'>
+          <form onSubmit={handleSubmit} className='flex flex-col gap-6 mt-6'>
 
             <input
               type="email"
@@ -35,16 +50,16 @@ const Login = () => {
               className={`py-3 px-4 border outline-none rounded-lg ${theme === "light" ? "text-black" : "text-black"}`}
             />
             <div className='relative w-full '>
-              
-            <input
-  type={`${showPassword ? "text" : "password"}`}
-  placeholder="Enter Password"
-  required
-  name="password"
-  value={LoginData.password}
-  onChange={HandleOnChangeLogin}
-  className={`w-full py-3 px-4 border outline-none rounded-lg ${theme === "light" ? "text-black" : "text-black"}`}
-/>
+
+              <input
+                type={`${showPassword ? "text" : "password"}`}
+                placeholder="Enter Password"
+                required
+                name="password"
+                value={LoginData.password}
+                onChange={HandleOnChangeLogin}
+                className={`w-full py-3 px-4 border outline-none rounded-lg ${theme === "light" ? "text-black" : "text-black"}`}
+              />
 
               <i
                 onClick={() => setShowPassword(prev => !prev)}

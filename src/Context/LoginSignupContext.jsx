@@ -1,10 +1,11 @@
 import { message } from "antd";
-import Password from "antd/es/input/Password";
 import { createContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 export const LoginSignupContext = createContext();
 
 export const LoginSignupProvider = ({ children }) => {
+
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
@@ -12,6 +13,7 @@ export const LoginSignupProvider = ({ children }) => {
     password: ""
   });
 
+  const [AllUsers, setAllUsers] = useState([])
   const [LoginData, setLoginData] = useState({
     email: "",
     password: ""
@@ -27,10 +29,15 @@ export const LoginSignupProvider = ({ children }) => {
 
   const handleSignupForm = (e, navigate) => {
     e.preventDefault();
-    message.success(`Account Created Successfully for ${signupData.name}`);
-    message.loading('Redirecting to login')
- 
-    console.log(signupData);
+    setAllUsers((prev)=> [...prev, signupData]);
+    if (AllUsers.email === signupData.email && AllUsers.role === signupData.role) {
+      message.error("Account Already Exist")
+    } else {
+      message.success(`Account Created Successfully for ${signupData.name}`);
+      message.loading('Redirecting to login')
+    }
+    console.log(AllUsers);
+    console.log(AllUsers[0].name);
   };
   // LoginFunc
 
@@ -49,7 +56,7 @@ export const LoginSignupProvider = ({ children }) => {
       message.error("User not found, please create an account first");
     }
   };
-  
+
   return (
     <LoginSignupContext.Provider value={{
       handleOnChangeSignup,
