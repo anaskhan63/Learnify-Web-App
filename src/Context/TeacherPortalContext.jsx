@@ -3,23 +3,15 @@ import { createContext, useState } from "react";
 export const TeacherPortalContext = createContext();
 
 export const TeacherProvider = ({ children }) => {
+  const [AllCourses, setAllCourses] = useState([]);
 
-  const [Course, setCourse] = useState([{
-    TeacherName: "",
-    CourseName: "",
-    Description: "",
-    Pricing: "",
-    Video: null,
-  }]);
-
-  // Example function to add a new course
   const addCourse = (newCourse) => {
-    setCourse((prevCourses) => [...prevCourses, newCourse]);
+    setAllCourses((prevCourses) => [...prevCourses, newCourse]);
   };
-  
+  console.log(AllCourses);
 
   return (
-    <TeacherPortalContext.Provider value={{ Course, setCourse, addCourse }}>
+    <TeacherPortalContext.Provider value={{ AllCourses, addCourse }}>
       {children}
     </TeacherPortalContext.Provider>
   );
