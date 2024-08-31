@@ -19,7 +19,6 @@ const CoursesPage = () => {
                   Your browser does not support the video tag.
                 </video>
               ))}
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=5R1sE76em-vyw90E&amp;list=PLwGdqUZWnOp1Rab71vx2zMF6qpwGDB2Z1"  ></iframe>
             </div>
           })
         }

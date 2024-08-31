@@ -4,12 +4,11 @@ export const TeacherPortalContext = createContext();
 
 export const TeacherProvider = ({ children }) => {
   const [AllCourses, setAllCourses] = useState([{
-    TeacherName: "Thapa Technical",
-    CourseName: "React 19 Course",
-    Description: "Best React 19 course series 2024 master in front end development",
-    Pricing: 0,
+    TeacherName: "",
+    CourseName: "",
+    Description: "",
+    Pricing: "",
     Video: [],
-    YouTubePlaylist:"https://youtube.com/playlist?list=PLwGdqUZWnOp1Rab71vx2zMF6qpwGDB2Z1&si=5R1sE76em-vyw90E",
   }]);
 
   const addCourse = (newCourse) => {

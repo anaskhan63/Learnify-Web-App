@@ -2,6 +2,8 @@ import { useContext } from "react";
 import Router from "./Routers/Router";
 import { ThemeContext } from "./Context/ThemeContext";
 import 'remixicon/fonts/remixicon.css'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   const { theme } = useContext(ThemeContext);
