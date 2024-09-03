@@ -7,6 +7,8 @@ import { ThemeContext } from '../../Context/ThemeContext';
 import { message, Tooltip } from 'antd';
 import RightArrow from '../../React-Slick-Custom-Arrows/RightArrow';
 import LeftArrow from '../../React-Slick-Custom-Arrows/LeftArrow';
+import { Link } from 'react-router-dom';
+import Button from '../../Components/Button/Button';
 
 const TeacherPortal = () => {
   const { addCourse } = useContext(TeacherPortalContext);
@@ -73,8 +75,6 @@ const TeacherPortal = () => {
     prevArrow: <LeftArrow />,
   };
 
-  console.log("teachr", TeacherCourse);
-  console.log("teachr all", CurrentTeacherAllCourses);
 
   return (
     <>
@@ -82,7 +82,6 @@ const TeacherPortal = () => {
       <h1 className="text-3xl raleway p-5 text-center">
         Welcome <span className="italic font-bold">{signupData.name}</span> to <strong>Learnify!</strong>
       </h1>
-
       <div className={`${theme === "light" ? "bg-white border" : "bg-[#2c3030] border border-gray-400"} rounded-lg p-4 w-[60%] block mx-auto`}>
         <h1 className="text-2xl p-5 text-center">Upload New Courses</h1>
         <form onSubmit={handleTeacherCourseDataSubmit} className="grid grid-cols-1 gap-3 p-5 w-full">
@@ -150,7 +149,7 @@ const TeacherPortal = () => {
       <p className="text-center p-4">
         {CurrentTeacherAllCourses.length <= 0 ? "You didn't upload any course yet!" : ""}
       </p>
-      <section className="p-4 sm:p-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <section className="p-4 sm:p-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {CurrentTeacherAllCourses.map((course, index) => (
           <div key={index} className="p-5 bg-white text-black border border-gray-400 rounded flex flex-col justify-between transition ease-linear duration-150 hover:scale-105">
             <div className="flex-grow">
@@ -189,7 +188,9 @@ const TeacherPortal = () => {
           </div>
         ))}
       </section>
-
+<div className="text-center p-5">
+<Button HrefLink={"/courses"} Title={"Go To Courses Page"} />
+</div>
     </>
   );
 };
