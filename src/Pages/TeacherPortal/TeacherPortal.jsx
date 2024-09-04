@@ -159,10 +159,13 @@ const TeacherPortal = () => {
       </p>
       <section className="p-4 sm:p-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {CurrentTeacherAllCourses.map((course, index) => (
-          <div key={index} className="p-5 bg-white text-black border border-gray-400 rounded flex flex-col justify-between transition ease-linear duration-150 hover:scale-105">
+          <div key={index} className="p-3 bg-white text-black border border-gray-400 rounded flex flex-col justify-between transition ease-linear duration-150 hover:scale-105">
             <div className="flex-grow">
+              <h1 className="text-xl outfit font-medium">
+                <span className='text-sm font-medium'>Author: </span> {course.TeacherName}
+              </h1>
               <h1 className="text-3xl outfit font-medium">
-                <span className='text-sm font-medium'>Author: </span> {course.CourseName}
+                <span className='text-sm font-medium'>Title: </span> {course.CourseName}
               </h1>
               <p className="text-base text-gray-700 mt-3">
                 <span className='text-sm font-medium'>About Course: </span> {course.Description}
