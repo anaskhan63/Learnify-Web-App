@@ -40,7 +40,7 @@ const Navbar = () => {
             {
               isHomePage ? (
                 <div className=' sm:flex items-center gap-3'>
-                  <Button Title={"Get Started"} Icon={"ri-arrow-right-line ml-1 text-lg"} />
+                  <Button HrefLink={"/login"} Title={"Get Started"} Icon={"ri-arrow-right-line ml-1 text-lg"} />
                 </div>)
                 : null
             }
