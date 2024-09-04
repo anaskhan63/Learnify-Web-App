@@ -1,6 +1,6 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import Navbar from '../../Components/Navbar/Navbar';
-import Slider from 'react-slick'; // Import Slider from react-slick
+import Slider from 'react-slick';
 import { TeacherPortalContext } from '../../Context/TeacherPortalContext';
 import { LoginSignupContext } from '../../Context/LoginSignupContext';
 import { ThemeContext } from '../../Context/ThemeContext';
@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 
 const TeacherPortal = () => {
-  const { addCourse } = useContext(TeacherPortalContext);
+  const { AllCourses, addCourse, deleteCourse } = useContext(TeacherPortalContext);
   const { signupData } = useContext(LoginSignupContext);
   const { theme } = useContext(ThemeContext);
   const videoInputRef = useRef(null);
-  const [CurrentTeacherAllCourses, setCurrentTeacherAllCourses] = useState([]);
+  const [CurrentTeacherAllCourses, setCurrentTeacherAllCourses] = useState([])
   const [TeacherCourse, setTeacherCourse] = useState({
     TeacherName: "",
     CourseName: "",
@@ -25,6 +25,10 @@ const TeacherPortal = () => {
     Date: new Date().toLocaleDateString()
   });
 
+  useEffect(() => {
+    setCurrentTeacherAllCourses(AllCourses);
+  }, [AllCourses]);
+
   const handleCourseData = (e) => {
     const { name, value } = e.target;
     setTeacherCourse((prev) => ({
@@ -32,18 +36,24 @@ const TeacherPortal = () => {
       [name]: name === "Pricing" ? Number(value) : value,
     }));
   };
-
   const handleVideoUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length < 2) {
+      message.error("Please upload at least two videos.");
+      e.target.value = "";
+      return;
+    }
+
     setTeacherCourse((prev) => ({
       ...prev,
-      Video: Array.from(e.target.files),
+      Video: files,
     }));
   };
 
+
   const handleTeacherCourseDataSubmit = (e) => {
     e.preventDefault();
-    setCurrentTeacherAllCourses((prev) => [...prev, TeacherCourse]);
-
     addCourse(TeacherCourse);
     message.success("Course Added Successfully!");
     setTeacherCourse({
@@ -57,10 +67,8 @@ const TeacherPortal = () => {
     videoInputRef.current.value = "";
   };
 
-  const handleCourseDelete = (index) => {
-    setCurrentTeacherAllCourses((prev) =>
-      prev.filter((course, i) => i !== index)
-    );
+  const handleCourseDelete = (course) => {
+    deleteCourse(course);
     message.success("Course Deleted Successfully!");
   };
 
@@ -75,16 +83,15 @@ const TeacherPortal = () => {
     prevArrow: <LeftArrow />,
   };
 
-
   return (
     <>
       <Navbar />
       <h1 className="text-3xl raleway p-5 text-center">
         Welcome <span className="italic font-bold">{signupData.name}</span> to <strong>Learnify!</strong>
       </h1>
-      <div className={`${theme === "light" ? "bg-white border" : "bg-[#2c3030] border border-gray-400"} rounded-lg p-4 w-[60%] block mx-auto`}>
+      <div className={`${theme === "light" ? "bg-white border" : "bg-[#2c3030] border border-gray-400"} rounded-lg p-4 w-[85%] sm:w-[60%] block mx-auto`}>
         <h1 className="text-2xl p-5 text-center">Upload New Courses</h1>
-        <form onSubmit={handleTeacherCourseDataSubmit} className="grid grid-cols-1 gap-3 p-5 w-full">
+        <form onSubmit={handleTeacherCourseDataSubmit} className="grid grid-cols-1 gap-3 p-2 sm:p-5 w-full">
           {/* Form Inputs */}
           <label htmlFor="Pricing " className='mt-2 text-sm text-gray-400'>Instructor Name*</label>
           <input
@@ -129,16 +136,17 @@ const TeacherPortal = () => {
             onChange={handleCourseData}
           />
           <label htmlFor="Pricing " className='mt-2 text-sm text-gray-400'>Course Video's*</label>
-          <input
-            className='p-3 border rounded'
-            type="file"
-            accept="video/*"
-            multiple
-            required
-            onChange={handleVideoUpload}
-            ref={videoInputRef}
-          />
-
+          <Tooltip placement='top' title={"Upload more than one video"}>
+            <input
+              className='p-3 border rounded'
+              type="file"
+              accept="video/*"
+              multiple
+              required
+              onChange={handleVideoUpload}
+              ref={videoInputRef}
+            />
+          </Tooltip>
           <button type="submit" className={`px-7 py-2 bg-transparent text-lg border ${theme === "light" ? "border-[#90C8F7] hover:bg-[#90C8F7]" : "border-gray-300 hover:border-[#3b4247] hover:bg-[#3b4247]"} rounded-md transition duration-300 hover:text-white`}>
             Upload
           </button>
@@ -180,19 +188,24 @@ const TeacherPortal = () => {
                 )}
               </div>
             </div>
-            <Tooltip placement='bottom' title="Want To Delete this Course?">
-              <button onClick={() => handleCourseDelete(index)} className='p-3 mt-5 bg-red-500 text-white w-full text-center rounded-md text-base hover:opacity-90'>
-                Delete <i className='ri-delete-bin-6-line' />
+            <Tooltip placement='bottom' title="Delete Course">
+              <button
+                className={`py-2 px-4 mt-4 bg-red-500 text-white rounded ${theme === "light" ? "hover:bg-red-700" : "hover:bg-red-600"}`}
+                onClick={() => handleCourseDelete(course)}
+              >
+                Delete
               </button>
             </Tooltip>
           </div>
         ))}
       </section>
-<div className="text-center p-5">
-<Button HrefLink={"/courses"} Title={"Go To Courses Page"} />
-</div>
+      <div className="text-center p-5">
+        <Button HrefLink={"/courses"} Title={"Go To Courses Page"} />
+      </div>
     </>
   );
 };
 
 export default TeacherPortal;
+
+

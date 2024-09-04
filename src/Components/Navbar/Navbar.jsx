@@ -39,7 +39,7 @@ const Navbar = () => {
           <div className={`flex flex-col items-end gap-3 sm:hidden absolute top-full right-0 ${theme === "light" ? " bg-[#47B135] text-white" : "bg-white text-black"} w-fit rounded-lg mr-3 p-5 shadow-lg`}>
             {
               isHomePage ? (
-                <div className='hidden sm:flex items-center gap-3'>
+                <div className=' sm:flex items-center gap-3'>
                   <Button Title={"Get Started"} Icon={"ri-arrow-right-line ml-1 text-lg"} />
                 </div>)
                 : null

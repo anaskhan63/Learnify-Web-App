@@ -16,11 +16,11 @@ const Login = () => {
   const { LoginData, HandleOnChangeLogin, HandleLoginForm, signupData } = useContext(LoginSignupContext)
   const handleSubmit = (e) => {
     HandleLoginForm(e);
-    if (signupData.role === "Teacher") {
+    if (signupData.role === "Teacher" && signupData.email === LoginData.email && signupData.password === LoginData.password) {
       setTimeout(() => {
         navigate("/teacher-portal");
       }, 1000);
-    } else if (signupData.role === "Student") {
+    } else if (signupData.role === "Student" && signupData.email === LoginData.email && signupData.password === LoginData.password) {
       setTimeout(() => {
         navigate("/courses");
       }, 1000);

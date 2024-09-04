@@ -29,7 +29,7 @@ export const LoginSignupProvider = ({ children }) => {
 
   const handleSignupForm = (e, navigate) => {
     e.preventDefault();
-    setAllUsers((prev)=> [...prev, signupData]);
+    setAllUsers((prev) => [...prev, signupData]);
 
     if (AllUsers.email === signupData.email && AllUsers.role === signupData.role) {
       message.error("Account Already Exist")
@@ -38,9 +38,6 @@ export const LoginSignupProvider = ({ children }) => {
       message.loading('Redirecting to login')
     }
   };
-  // console.log("alluser",AllUsers);
-  //   console.log(AllUsers[0]?.name);
-
 
   // LoginFunc
 

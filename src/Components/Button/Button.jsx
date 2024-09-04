@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Button = ({ Title, Icon,type,HrefLink, onclickw }) => {
+const Button = ({ Title, Icon,type,HrefLink, onclick }) => {
   return (
     <>
       <Link to={HrefLink}>
